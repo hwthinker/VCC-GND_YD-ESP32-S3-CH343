@@ -1,4 +1,107 @@
-## Test WS2812 menggunakan library FASTLED
+
+
+# ESP32 Devkitc-1 Tutorial untuk N16R8
+
+![img](./assets/img11.jpg)
+
+
+## Install Board
+
+1. Masuk ke preferences
+
+![](./assets/02.png)
+
+2. Klik Additional Board Manager
+
+![](./assets/03.png)
+
+3. Tambahkan board esp32 kalimat berikut https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+
+![](./assets/04.png)
+
+4. Pilih Tools -> Board -> Board Manager
+
+![image-20241216161508649](./assets/image-20241216161508649.png)
+
+5. Search ESP32 kemudian klik install
+
+![](./assets/06.png)
+
+6. Pilih Tools -> Board -> ESP32 -> esp32S3 dev Module
+
+![image-20241216161659535](./assets/image-20241216161659535.png)
+
+7. Untuk Arduino 2.0 bisa juga Klik board pada Tool Bar
+
+![image-20241216051131337](./assets/image-20241216051131337.png)
+
+8. kemudian pilih ESP32S3 Dev Module, untuk serial port sesuikan dengan port serial ditempat anda
+
+![image-20241216051242738](./assets/image-20241216051242738.png)
+
+9. Setting port serial , untuk windows bisa cek device manager, pastikan anda telah install driver serial usb anda
+
+![image-20241216053210299](./assets/image-20241216053210299.png)
+
+## Serial Port
+
+Board **ESP32-S3 ** ini mendukung upload dan komunikasi data serial ke komputer dengan dua Mode:
+
+- Mode  USB Serial konverter ch343
+- Mode Native USB
+
+Pengaturan ini konfigurasi ini ada dua hal yaitu pengaturan Hardware dan pengaturan Software.  untuk pengaturan hardware bisa dilihat pada gambar dibawah ini:
+
+### Mode USB Serial konverter (default manufaktur)
+
+![1](./assets/1.png)
+
+Pada mode ini Komunikasi Serial ditangani oleh chip usb serial CH343. Pastikan posisi switch dipindah ke serial usb. Untuk memerika apakah mode sudah mode Serial USB, dilinux bisa dicek dengan menggunakan perintah *lsusb*. bila dijalankan hasilnya akan seperti ini:
+
+![image-20241217044355726](./assets/image-20241217044355726.png)
+
+Pastikan juga data serial  di arahkan ke Serial USB CH343 ini dan bukannya ke native USB, ini dilakukan dengan cara mendisable  opsi "USB CDC on boot". Langkah mendisable USB CDC on boot ini bisa di cek pada gambar dibawah ini
+
+![image-20241216153751671](./assets/image-20241216153751671.png)
+
+### Mode Native USB untuk Upload dan komunikasi data
+
+![2](./assets/2.png)
+
+Pada mode ini Komunikasi Serial ditangani oleh native USB yang merupakan fitur yang ada diESP32-S3. untuk mengaktikan mode ini  Pastikan posisi switch dipindah ke native USB. Untuk memerika apakah mode sudah native USB dilinux bisa dicek dengan menggunakan perintah *lsusb*. bila dijalankan hasilnya akan seperti ini:
+
+![image-20241217044046574](./assets/image-20241217044046574.png)
+
+Untuk pengaturan konfigurasi software pastikan data serial  di arahkan Native USB  dengan cara  konfigurasi  USB CDC on Boot  enablekan.  Pengaturan ini memastikan board dapat menggunakan port USB internal untuk komunikasi serial.
+
+![image-20241216154103697](./assets/image-20241216154103697.png)
+
+
+
+## Contoh Kode Program
+
+### Test WS2812 menggunakan library FASTLED
+
+LED WS2812 adalah jenis LED RGB dengan pengontrol bawaan yang memungkinkan setiap LED dikendalikan secara individual menggunakan satu pin data. Untuk mempermudah pengendalian LED ini, kita dapat menggunakan library **FASTLED** yang menyediakan fungsi-fungsi intuitif untuk membuat efek cahaya yang menarik. Panduan berikut akan membantu Anda menginstal library FASTLED di Arduino IDE dan menguji contoh kode sederhana untuk mengontrol LED WS2812.
+
+#### Langkah-langkah Instalasi Library FASTLED
+
+Pastikan library **FASTLED** telah terinstal di Arduino IDE Anda. Jika belum, ikuti langkah-langkah berikut:
+
+1. Klik ikon **Library Manager** di panel **sidebar** Arduino IDE.
+2. Ketik **FastLED** di kolom pencarian.
+3. Temukan library **FastLED by Daniel Garcia**.
+4. Klik tombol **Install** untuk menginstalnya.
+
+
+
+![image-20250111140442247](./assets/image-20250111140442247.png)
+
+#### Menggunakan Contoh Kode
+
+Setelah library terinstal, buat file baru atau buka contoh program di **File -> Examples -> Basics -> BareMinimum**.  kemudain yang harus anda lakukan adalah:
+
+1. Gantikan kode yang ada dengan kode berikut:
 
 ```c++
 #include "FastLED.h"
@@ -55,12 +158,60 @@ void loop() {
 }
 ```
 
+
+
+## Upload program
+
+Bila tampilan seperti ini maka anda harus mengkonfigurasi ESP32 anda agar bisa melakukan download
+
+```
+- ---esptool.py v3.0-dev
+- ---Serial port COM…
+- ---Connecting........_____....._____.....__
+```
+
+Langkah yang harus dilakukan
+
+- Tekan dan tahan tombol Boot/0  
+- Klik(tekan dan lepas) tombol reset/EN sambil tetap tekan tombol Boot .
+- Lepas tombol boot
+- Klik tombol upload pada Arduino IDE, bila sukses akan menampilkan info
+
+```cpp
+- ---Compressed 261792 bytes to 122378...
+- ---Writing at 0x00010000... (12 %)
+- ---Writing at 0x00014000... (25 %)
+- ---Writing at 0x00018000... (37 %)
+```
+
+- Setelah selesai Wajib klik tombol **reset** sekali lagi untuk berpindah dari mode download menjadi mode run
+
+> [!NOTE]  
+> INGAT YA WAJIB Di Klik Tombol RESET setelah proses upload selesai, tanpa itu program yang baru diupload tidak akan dijalankan
+
+
+
 ## Menggunakan library Adafruit
+
+Library **Adafruit NeoPixel** adalah pilihan lain yang populer untuk mengontrol LED WS2812 dan jenis LED serupa. Library ini menyediakan fungsi yang mudah digunakan untuk mengontrol warna dan efek pencahayaan pada strip atau matriks LED. Berikut adalah panduan singkat untuk menginstal library ini dan contoh kode sederhana untuk mengontrol LED WS2812.
+
+#### Langkah-langkah Instalasi Library Adafruit NeoPixel
+
+1. Buka Arduino IDE, lalu klik ikon **Library Manager** di panel **sidebar**.
+2. Ketik **Adafruit NeoPixel** di kolom pencarian.
+3. Temukan library **Adafruit NeoPixel by Adafruit**.
+4. Klik tombol **Install** untuk memasangnya, lebih jelas lihat gambar berikut
+
+![image-20250111143415429](./assets/image-20250111143415429.png)
+
+#### Contoh Kode Mengontrol WS2812
+
+Gunakan kode berikut untuk mengontrol satu LED WS2812 yang menyala berwarna merah selama 1 detik:
 
 ```c++
 #include <Adafruit_NeoPixel.h>
 
-#define PIN        48 // aternatif lainnya  38 16 8
+#define PIN        48 
 #define NUMPIXELS  1
 
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
@@ -73,114 +224,46 @@ void loop() {
   pixels.setPixelColor(0, pixels.Color(255,0,0)); 
   pixels.show();
   delay(1000);
+  pixels.setPixelColor(0, pixels.Color(0,0,0)); 
+  pixels.show();
+  delay(1000);
 }
 ```
 
+5. Bila sudah selesai upload program dan kemudian lihat hasilnya
 
+6. Bila berhasil LED RGB WS2812 akan LED akan berkedip  dengan nyala warna merah saat ON
 
-## Blinky dengan Adafruit  neopixel
+**Catatan:**
 
-```c++
-#include <Adafruit_NeoPixel.h>
-
-// Parameter konfigurasi LED
-#define PIN        48      // Pin Data untuk kontrol LED
-#define NUMPIXELS  1       // Jumlah LED yang digunakan
-#define BRIGHTNESS 128     // Kecerahan LED (0-255)
-
-// Inisialisasi objek NeoPixel
-// Parameter: jumlah LED, pin data, tipe LED (NEO_GRB + NEO_KHZ800 untuk WS2812)
-Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
-
-// Variabel untuk menghitung urutan LED yang menyala
-int i = 0;
-
-void setup() {
-    // Inisialisasi LED strip
-    pixels.begin();
-    
-    // Mengatur kecerahan global
-    pixels.setBrightness(BRIGHTNESS);
-    
-    // Membersihkan semua LED (mematikan semua)
-    pixels.clear();
-    pixels.show();
-}
-
-void loop() {
-    // Reset counter jika sudah mencapai LED terakhir
-    if (i == NUMPIXELS) {
-        i = 0;
-    }
-    
-    // Menyalakan LED dengan warna merah
-    // Parameter setPixelColor: nomor LED, Red, Green, Blue
-    pixels.setPixelColor(i, pixels.Color(0, 255, 0));  // Warna merah (255,0,0)
-    pixels.show();   // Menampilkan perubahan
-    
-    delay(50);      // Jeda 50 milidetik
-    
-    // Mematikan LED (warna hitam = LED mati)
-    pixels.setPixelColor(i, pixels.Color(0, 0, 0));    // LED mati (0,0,0)
-    pixels.show();   // Menampilkan perubahan
-    
-    delay(50);      // Jeda 50 milidetik
-    
-    i++;            // Pindah ke LED berikutnya
-}
-```
+- Ganti warna LED dengan nilai RGB yang diinginkan menggunakan `pixels.Color(red, green, blue)`.
 
 
 
-## Uji GPIO yang terhubung ke WS2812
+## Pemecahan Masalah
 
-```C++
-#include <Adafruit_NeoPixel.h>
+### A. Port Com  tidak dapat dikenali di Arduino
 
-// Daftar GPIO yang ingin diuji
-int gpioList[] = {48, 38, 16, 8, 2, 4, 5, 12, 13, 14, 15, 18, 19, 21, 22, 23, 25, 26, 27, 32, 33, 34, 35, 36, 37};
-// Jumlah GPIO dalam daftar
-int gpioCount = sizeof(gpioList) / sizeof(gpioList[0]);
+Masuk ke mode unduh: 
+- Tekan dan tahan tombol Boot/0  
+- Klik(tekan dan lepas) tombol reset/EN sambil tetap tekan tombol Boot .
+- Lepas tombol boot
+- Setelah selesai Wajib klik tombol **reset** sekali lagi untuk berpindah dari mode download menjadi mode run
 
-#define NUMPIXELS 1
-Adafruit_NeoPixel pixels(NUMPIXELS, 0, NEO_GRB + NEO_KHZ800);
+### B. Program tidak dapat berjalan setelah diunggah
 
-void setup() {
-  Serial.begin(115200);
-  pixels.begin();
-}
+Setelah upload berhasil, Anda perlu menekan tombol Reset sebelum dapat dijalankan.
 
-void loop() {
-  for (int i = 0; i < gpioCount; i++) {
-    int currentPin = gpioList[i];
-    pixels.setPin(currentPin);  // Set GPIO yang akan diuji
-    pixels.begin();              // Inisialisasi ulang untuk memastikan perubahan PIN
-    
-    Serial.print("Testing GPIO: ");
-    Serial.println(currentPin);
+### C. Port serial di Arduino tidak dapat mencetak
 
-    // Set warna merah untuk menguji
-    pixels.setPixelColor(0, pixels.Color(255, 0, 0));
-    pixels.show();
-    delay(1000);                 // Tunggu untuk melihat apakah LED menyala
+Anda perlu mengatur USB CDC On Boot di toolbar untuk diaktifkan.
 
-    // Matikan LED untuk pindah ke GPIO berikutnya
-    pixels.setPixelColor(0, pixels.Color(0, 0, 0));
-    pixels.show();
-    delay(500);
-  }
+### D. LED RGB tidak mau nyala walapun saya sudah upload program sesuai petunjuk
+Setelah upload Coba anda tekan tombol Reset, bila masih tidak bisa kemungkinan Jumper LED belum tersolder. Solder jumper sesuai gambar berikut
 
-  Serial.println("Testing selesai. Mengulang kembali...");
-  delay(2000); // Tunggu sebentar sebelum mengulangi tes
-}
+![img](./assets/821a53fb08920e2cc12a883fb6aeb8f8396ac226.jpeg)
 
-```
 
-Untuk memodifikasi program ini agar dapat menguji seluruh GPIO pada ESP32-S3 YD-ESP32-S3, kita perlu melakukan loop melalui daftar GPIO yang memungkinkan untuk digunakan. Setiap GPIO akan diuji satu per satu sebagai pin kontrol untuk WS2812. Jika lampu LED menyala, kita bisa tahu bahwa GPIO tersebut terhubung ke WS2812.
 
-Berikut adalah modifikasi kode yang akan menguji GPIO yang tersedia dan menampilkan hasilnya di Serial Monitor:Penjelasan
 
-- `gpioList[]`: Daftar GPIO yang akan diuji. Anda dapat menyesuaikan daftar ini sesuai kebutuhan Anda.
-- Loop pada `gpioList[]`: Kode akan mencoba setiap GPIO dalam daftar sebagai pin kontrol untuk WS2812.
-- Output Serial: Program akan menampilkan nomor GPIO yang sedang diuji di Serial Monitor.
-- Delay: Memberikan waktu untuk melihat apakah LED menyala pada setiap GPIO.
+
