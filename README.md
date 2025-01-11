@@ -265,5 +265,11 @@ Setelah upload Coba anda tekan tombol Reset, bila masih tidak bisa kemungkinan J
 
 
 
+### E. Cara setting flash untuk board dengan ukuran flash N8R2, N8R8 dan N16R8 bagaimana ya?
+
+Cara pengaturan bisa cek gambar dibawah ini, pilih Tool-> Flash Size dan sesuaikan dengan  ukuran Flash memori anda.
+
+![ESP32-S3 DevkitC-1](./assets/ESP32-S3%20DevkitC-1.png)
+
 
 
