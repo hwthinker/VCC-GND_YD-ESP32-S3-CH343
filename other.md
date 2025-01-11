@@ -53,5 +53,52 @@ Berikut adalah modifikasi kode yang akan menguji GPIO yang tersedia dan menampil
 - Output Serial: Program akan menampilkan nomor GPIO yang sedang diuji di Serial Monitor.
 - Delay: Memberikan waktu untuk melihat apakah LED menyala pada setiap GPIO.
 
+##  Tipe PSRAM (OPI atau QSPI) pada ESP32-S3:
 
+Pada perangkat ESP32-S3, PSRAM (Pseudo-Static RAM) menjadi komponen penting untuk mendukung aplikasi yang membutuhkan memori tambahan, seperti pengolahan gambar, audio, atau aplikasi IoT yang kompleks. PSRAM dapat menggunakan antarmuka **OPI (Octal Peripheral Interface)** atau **QSPI (Quad Peripheral Interface)**, yang menentukan jumlah jalur data dan kecepatan transfernya. Penting untuk memastikan tipe antarmuka PSRAM yang digunakan agar konfigurasi perangkat lunak, seperti pada Arduino IDE atau platform pengembangan lainnya, sesuai dengan spesifikasi hardware.
+
+Langkah berikut akan membantu Anda memverifikasi apakah PSRAM pada ESP32-S3 Anda menggunakan OPI atau QSPI, baik melalui  uji coba langsung melalui kode dan  konfigurasi perangkat lunak yang ada di arduino
+
+Tahapan yang harus dilakukan 
+
+1.  Buka Arduino Ide Anda
+2. copy paste program berikut
+
+```c++
+#include <esp32-hal-psram.h>
+
+void setup() {
+  Serial.begin(115200);
+  if (psramFound()) {
+    Serial.println("PSRAM Detected!");
+    size_t psramSize = ESP.getPsramSize() / (1024 * 1024);
+    Serial.print("PSRAM Size: ");
+    Serial.print(psramSize);
+    Serial.println(" MB");
+  } else {
+    Serial.println("No PSRAM Detected!");
+  }
+}
+
+void loop() {
+  // Do nothing
+}
+```
+
+3. Pilih ukuran Flash yang sesuai dengan board anda
+
+![ESP32-S3 DevkitC-1 (1)](./assets/ESP32-S3%20DevkitC-1%20(1).png)
+
+4. Konfigurasi PSRAM menjadi tipe OPI PSRAM
+
+![image-20250111195241156](./assets/image-20250111195241156.png)
+
+5. upload program
+
+6. bila berhasil  akan muncul tampilan seperti ini
+
+![image-20250111195101283](./assets/image-20250111195101283.png)
+
+6. coba anda ganti PSRAM dari OPI menjadi QSPI dan ulangi lagi
+6. dari hasil anda akan tahu apakah tipe PSRAM anda OPI atau PSI, pada contoh di atas tipe PSRAM adalah OPI 
 
