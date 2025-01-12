@@ -27,7 +27,7 @@
 
 ![](./assets/06.png)
 
-6. Pilih Tools -> Board -> ESP32 -> esp32S3 dev Module
+6. Pilih Tools -> Board -> ESP32 -> ESP32S3 dev Module
 
 ![image-20241216161659535](./assets/image-20241216161659535.png)
 
@@ -35,46 +35,17 @@
 
 ![image-20241216051131337](./assets/image-20241216051131337.png)
 
-8. kemudian pilih ESP32S3 Dev Module, untuk serial port sesuikan dengan port serial ditempat anda
+8. kemudian pilih ESP32S3 Dev Module
 
 ![image-20241216051242738](./assets/image-20241216051242738.png)
 
-9. Setting port serial , untuk windows bisa cek device manager, pastikan anda telah install driver serial usb anda
+8. Langkah berikutnya adalah memastikan Arduino mengetahui Kapasitas Flash yang tersedia. ini dilakukan dengan cara mengatur konfigurasi "Flash Size". Bila board anda punya ukuran Flash 16MB dengan PSRAM 8MB (OPI PSRAM) maka gunakan konfigurasi seperti pada gambar berikut
+
+![image-20250112100623904](./assets/image-20250112100623904.png)
+
+9. Setting port serial , untuk windows bisa cek device manager, pastikan anda telah install driver serial usb anda, bila tidak dikenali di windows install driver serial tersebut melalui link https://www.wch-ic.com/search?q=CH343&t=downloads
 
 ![image-20241216053210299](./assets/image-20241216053210299.png)
-
-## Serial Port
-
-Board **ESP32-S3 ** ini mendukung upload dan komunikasi data serial ke komputer dengan dua Mode:
-
-- Mode  USB Serial konverter ch343
-- Mode Native USB
-
-Pengaturan ini konfigurasi ini ada dua hal yaitu pengaturan Hardware dan pengaturan Software.  untuk pengaturan hardware bisa dilihat pada gambar dibawah ini:
-
-### Mode USB Serial konverter (default manufaktur)
-
-![1](./assets/1.png)
-
-Pada mode ini Komunikasi Serial ditangani oleh chip usb serial CH343. Pastikan posisi switch dipindah ke serial usb. Untuk memerika apakah mode sudah mode Serial USB, dilinux bisa dicek dengan menggunakan perintah *lsusb*. bila dijalankan hasilnya akan seperti ini:
-
-![image-20241217044355726](./assets/image-20241217044355726.png)
-
-Pastikan juga data serial  di arahkan ke Serial USB CH343 ini dan bukannya ke native USB, ini dilakukan dengan cara mendisable  opsi "USB CDC on boot". Langkah mendisable USB CDC on boot ini bisa di cek pada gambar dibawah ini
-
-![image-20241216153751671](./assets/image-20241216153751671.png)
-
-### Mode Native USB untuk Upload dan komunikasi data
-
-![2](./assets/2.png)
-
-Pada mode ini Komunikasi Serial ditangani oleh native USB yang merupakan fitur yang ada diESP32-S3. untuk mengaktikan mode ini  Pastikan posisi switch dipindah ke native USB. Untuk memerika apakah mode sudah native USB dilinux bisa dicek dengan menggunakan perintah *lsusb*. bila dijalankan hasilnya akan seperti ini:
-
-![image-20241217044046574](./assets/image-20241217044046574.png)
-
-Untuk pengaturan konfigurasi software pastikan data serial  di arahkan Native USB  dengan cara  konfigurasi  USB CDC on Boot  enablekan.  Pengaturan ini memastikan board dapat menggunakan port USB internal untuk komunikasi serial.
-
-![image-20241216154103697](./assets/image-20241216154103697.png)
 
 
 
@@ -239,6 +210,95 @@ void loop() {
 - Ganti warna LED dengan nilai RGB yang diinginkan menggunakan `pixels.Color(red, green, blue)`.
 
 
+
+## Akses Serial Port di ESP32
+
+Board **ESP32-S3 ** ini mendukung upload dan komunikasi data serial ke komputer dengan dua Mode:
+
+- Mode  USB Serial konverter ch343
+- Mode Native USB
+
+Pengaturan ini konfigurasi ini ada dua hal yaitu pengaturan Hardware dan pengaturan Software.  untuk pengaturan hardware bisa dilihat pada gambar dibawah ini:
+
+### Mode USB Serial konverter (default manufaktur)
+
+![1](./assets/1.png)
+
+Pada mode ini Komunikasi Serial ditangani oleh chip usb serial CH343. Pastikan posisi switch dipindah ke serial usb. Untuk memerika apakah mode sudah mode Serial USB, dilinux bisa dicek dengan menggunakan perintah *lsusb*. bila dijalankan hasilnya akan seperti ini:
+
+![image-20241217044355726](./assets/image-20241217044355726.png)
+
+Pastikan juga data serial  di arahkan ke Serial USB CH343 ini dan bukannya ke native USB, ini dilakukan dengan cara mendisable  opsi "USB CDC on boot". Langkah mendisable USB CDC on boot ini bisa di cek pada gambar dibawah ini
+
+![image-20250112093506124](./assets/image-20250112093506124.png)
+
+- Pastikan Flash size sesuai dengan board anda, Bila board anda punya ukuran Flash 16MB dengan PSRAM 8MB (OPI PSRAM) maka gunakan konfigurasi seperti pada gambar berikut
+
+![image-20250112100623904](./assets/image-20250112100623904.png)
+
+- Jalankan kode sederhana ini
+
+```c++
+void setup() {
+  // initialize both serial ports:
+  Serial.begin(9600);
+}
+
+void loop() {
+  Serial.println("hello world");
+  delay(500);
+}
+
+```
+
+- Klik **Verify** untuk memeriksa kode. 
+- Klik **Upload** untuk mengunggah kode ke ESP32-S3.
+- Bila sudah selesai Silahkan buka Tools -> Serial Monitor
+- Atur baud rate di pojok kanan bawah menjadi **9600** (sesuai dengan `Serial.begin(9600)` di kode).
+- Anda akan melihat teks **"hello world"** muncul setiap 500ms.
+
+![image-20250112092642208](./assets/image-20250112092642208.png)
+
+### Mode Native USB untuk Upload dan komunikasi data
+
+![2](./assets/2.png)
+
+Pada mode ini Komunikasi Serial ditangani oleh native USB yang merupakan fitur yang ada di ESP32-S3. untuk mengaktikan mode ini  Pastikan posisi switch dipindah ke native USB. Untuk memerika apakah mode sudah native USB dilinux bisa dicek dengan menggunakan perintah *lsusb*. bila dijalankan hasilnya akan seperti ini:
+
+![image-20241217044046574](./assets/image-20241217044046574.png)
+
+Untuk pengaturan konfigurasi software pastikan data serial  di arahkan Native USB  dengan cara  konfigurasi  USB CDC on Boot  enablekan.  Pengaturan ini memastikan board dapat menggunakan port USB internal untuk komunikasi serial.
+
+![image-20250112095747228](./assets/image-20250112095747228.png)
+
+- Pastikan Flash size sesuai dengan board anda, Bila board anda punya ukuran Flash 16MB dengan PSRAM 8MB (OPI PSRAM) maka gunakan konfigurasi seperti pada gambar berikut
+
+![image-20250112100623904](./assets/image-20250112100623904.png)
+
+- Jalankan kode sederhana ini
+
+```c++
+void setup() {
+  // initialize both serial ports:
+  Serial.begin(9600);
+}
+
+void loop() {
+  Serial.println("hello world");
+  delay(500);
+}
+
+```
+
+- Klik **Verify** untuk memeriksa kode. 
+- Klik **Upload** untuk mengunggah kode ke ESP32-S3.
+- Bila sudah selesai Silahkan buka Tools -> Serial Monitor
+- Atur baud rate di pojok kanan bawah menjadi **9600** (sesuai dengan `Serial.begin(9600)` di kode).
+- Anda akan melihat teks **"hello world"** muncul setiap 500ms.
+
+![image-20250112092642208](./assets/image-20250112092642208.png)
+
+### 
 
 ## Pemecahan Masalah
 
