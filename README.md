@@ -1,8 +1,8 @@
 
 
-# ESP32 Devkitc-1 Tutorial untuk N16R8
+# Tutorial ESP32 DevkitC-1  Model YD-ESP32-S3
 
-![img](./assets/img11.jpg)
+![image-20250113044653767](./assets/image-20250113044653767.png)
 
 
 ## Install Board
@@ -39,7 +39,7 @@
 
 ![image-20241216051242738](./assets/image-20241216051242738.png)
 
-8. Langkah berikutnya adalah memastikan Arduino mengetahui Kapasitas Flash yang tersedia. ini dilakukan dengan cara mengatur konfigurasi "Flash Size". Bila board anda punya ukuran Flash 16MB dengan PSRAM 8MB (OPI PSRAM) maka gunakan konfigurasi seperti pada gambar berikut
+8. Langkah berikutnya adalah memastikan Arduino mengetahui Kapasitas Flash yang tersedia. ini dilakukan dengan cara mengatur konfigurasi "Flash Size". Sesuaikan Flash dan  PSRAM(jika ada) anda menggunakan konfigurasi seperti pada gambar berikut
 
 ![image-20250112100623904](./assets/image-20250112100623904.png)
 
@@ -232,10 +232,6 @@ Pastikan juga data serial  di arahkan ke Serial USB CH343 ini dan bukannya ke na
 
 ![image-20250112093506124](./assets/image-20250112093506124.png)
 
-- Pastikan Flash size sesuai dengan board anda, Bila board anda punya ukuran Flash 16MB dengan PSRAM 8MB (OPI PSRAM) maka gunakan konfigurasi seperti pada gambar berikut
-
-![image-20250112100623904](./assets/image-20250112100623904.png)
-
 - Jalankan kode sederhana ini
 
 ```c++
@@ -271,10 +267,6 @@ Untuk pengaturan konfigurasi software pastikan data serial  di arahkan Native US
 
 ![image-20250112095747228](./assets/image-20250112095747228.png)
 
-- Pastikan Flash size sesuai dengan board anda, Bila board anda punya ukuran Flash 16MB dengan PSRAM 8MB (OPI PSRAM) maka gunakan konfigurasi seperti pada gambar berikut
-
-![image-20250112100623904](./assets/image-20250112100623904.png)
-
 - Jalankan kode sederhana ini
 
 ```c++
@@ -298,7 +290,12 @@ void loop() {
 
 ![image-20250112092642208](./assets/image-20250112092642208.png)
 
-### 
+
+
+## Diskripsi PIN GPIO
+![img](./assets/img11.jpg)
+
+
 
 ## Pemecahan Masalah
 
